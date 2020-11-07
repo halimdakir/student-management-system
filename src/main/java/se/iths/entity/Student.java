@@ -17,7 +17,7 @@ public class Student {
     @NotEmpty(message = "Required")
     private String firstName;
     @NotEmpty(message = "Required")
-    private String lastname;
+    private String lastName;
     @NotNull(message = "Required")
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Exemple@email.com")
     private String email;
@@ -28,9 +28,9 @@ public class Student {
     public Student() {
     }
 
-    public Student(@NotEmpty(message = "Required") String firstName, @NotEmpty(message = "Required") String lastname, @NotNull(message = "Required") @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Exemple@email.com") String email, @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "0700 000000") String phoneNumber) {
+    public Student(@NotEmpty(message = "Required") String firstName, @NotEmpty(message = "Required") String lastName, @NotNull(message = "Required") @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "Exemple@email.com") String email, @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "0700 000000") String phoneNumber) {
         this.firstName = firstName;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -51,12 +51,12 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastname) {
+        this.lastName = lastname;
     }
 
     public String getEmail() {

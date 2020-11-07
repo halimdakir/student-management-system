@@ -17,21 +17,21 @@ public class StudentService {
         return student;
     }
 
-    public Student updateTodo(Student student) {
+    public Student updateStudent(Student student) {
         entityManager.merge(student);
         return student;
     }
 
-    public Student findStudentById(String lastname) {
-        return entityManager.find(Student.class, lastname);
+    public Student findStudentById(String lastName) {
+        return entityManager.find(Student.class, lastName);
     }
 
     public List<Student> getAllStudents() {
         return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
     }
 
-    public void deleteStudent(String lastname){
-        entityManager.remove(entityManager.find(Student.class, lastname));
+    public void deleteStudent(String lastName){
+        entityManager.remove(entityManager.find(Student.class, lastName));
     }
 
 }
