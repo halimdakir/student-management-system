@@ -22,7 +22,7 @@ public class StudentService {
         return student;
     }
 
-    public Student findStudentById(String lastName) {
+    public Student findStudentByLastName(String lastName) {
         return entityManager.find(Student.class, lastName);
     }
 

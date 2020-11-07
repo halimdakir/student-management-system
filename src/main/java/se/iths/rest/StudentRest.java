@@ -3,7 +3,6 @@ package se.iths.rest;
 
 import se.iths.entity.Student;
 import se.iths.service.StudentService;
-
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -28,7 +27,7 @@ public class StudentRest {
     @Path("{lastName}")
     @GET
     public Response getOneStudent(@PathParam("lastName") String lastName){
-        Student student = studentService.findStudentById(lastName);
+        Student student = studentService.findStudentByLastName(lastName);
         if (student!=null){
             return Response.ok(student).build();
         }else {
@@ -53,7 +52,7 @@ public class StudentRest {
     @Path("{lastName}")
     @DELETE
     public Response deleteStudent(@PathParam("lastName") String lastName){
-        Student student = studentService.findStudentById(lastName);
+        Student student = studentService.findStudentByLastName(lastName);
         if (student != null){
             studentService.deleteStudent(lastName);
             return Response.ok(student).build();
