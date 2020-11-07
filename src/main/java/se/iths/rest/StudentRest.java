@@ -2,6 +2,7 @@ package se.iths.rest;
 
 
 import se.iths.entity.Student;
+import se.iths.exception.StudentNotFound;
 import se.iths.service.StudentService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -29,7 +30,7 @@ public class StudentRest {
     public Response getOneStudent(@PathParam("lastName") String lastName){
         var student = studentService.findStudentByLastName(lastName);
         if (student==null){
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new StudentNotFound("This name ["+lastName+"] does not exist!");
         }else {
             return Response.ok(student).build();
         }
