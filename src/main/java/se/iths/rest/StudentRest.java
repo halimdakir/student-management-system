@@ -3,6 +3,7 @@ package se.iths.rest;
 
 import se.iths.entity.Student;
 import se.iths.exception.StudentNotFound;
+import se.iths.exception.StudentSuccessfullyDeleted;
 import se.iths.service.StudentService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -54,11 +55,11 @@ public class StudentRest {
     @DELETE
     public Response deleteStudent(@PathParam("lastName") String lastName){
         var student = studentService.findStudentByLastName(lastName);
-        if (student != null){
-            studentService.deleteStudent(lastName);
-            return Response.ok(student).build();
+        if (student == null){
+            throw new StudentNotFound(lastName);
         }else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            studentService.deleteStudent(lastName);
+            throw new StudentSuccessfullyDeleted(lastName);
         }
     }
 
