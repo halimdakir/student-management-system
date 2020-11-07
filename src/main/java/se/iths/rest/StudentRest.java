@@ -27,11 +27,11 @@ public class StudentRest {
     @Path("{lastName}")
     @GET
     public Response getOneStudent(@PathParam("lastName") String lastName){
-        Student student = studentService.findStudentByLastName(lastName);
-        if (student!=null){
-            return Response.ok(student).build();
-        }else {
+        var student = studentService.findStudentByLastName(lastName);
+        if (student==null){
             return Response.status(Response.Status.NOT_FOUND).build();
+        }else {
+            return Response.ok(student).build();
         }
     }
 
@@ -52,7 +52,7 @@ public class StudentRest {
     @Path("{lastName}")
     @DELETE
     public Response deleteStudent(@PathParam("lastName") String lastName){
-        Student student = studentService.findStudentByLastName(lastName);
+        var student = studentService.findStudentByLastName(lastName);
         if (student != null){
             studentService.deleteStudent(lastName);
             return Response.ok(student).build();
