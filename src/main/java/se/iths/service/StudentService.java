@@ -3,6 +3,7 @@ package se.iths.service;
 import se.iths.entity.Student;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -23,15 +24,22 @@ public class StudentService {
     }
 
     public Student findStudentByLastName(String lastName) {
-        return entityManager.find(Student.class, lastName);
+        return  entityManager.createQuery(
+                "SELECT s FROM Student s WHERE s.lastName LIKE :lastName", Student.class)
+                .setParameter("lastName", lastName)
+                .getSingleResult();
     }
 
     public List<Student> getAllStudents() {
-        return entityManager.createQuery("SELECT s from Student s", Student.class).getResultList();
+        return entityManager.createQuery(
+                "SELECT s FROM Student s", Student.class)
+                .getResultList();
     }
 
     public void deleteStudent(String lastName){
-        entityManager.remove(entityManager.find(Student.class, lastName));
+        entityManager.remove(entityManager.createQuery(
+                "SELECT s FROM Student s WHERE s.lastName LIKE :lastName", Student.class)
+                .setParameter("lastName", lastName)
+                .getSingleResult());
     }
-
 }
