@@ -31,7 +31,7 @@ public class StudentRest {
     public Response getOneStudent(@PathParam("lastName") String lastName){
         var student = studentService.findStudentByLastName(lastName);
         if (student==null){
-            throw new StudentNotFound("This name ["+lastName+"] does not exist!");
+            throw new StudentNotFound(lastName);
         }else {
             return Response.ok(student).build();
         }
