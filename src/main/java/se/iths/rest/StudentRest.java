@@ -62,12 +62,13 @@ public class StudentRest {
     @Path("{lastName}")
     @DELETE
     public Response deleteStudent(@PathParam("lastName") String lastName){
-        var student = studentService.findStudentByLastName(lastName);
+        String lastNameProcessed = lastNameProcessor.processLastName(lastName);
+        var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student == null){
-            throw new StudentNotFound(lastName);
+            throw new StudentNotFound(lastNameProcessed);
         }else {
-            studentService.deleteStudent(lastName);
-            throw new StudentSuccessfullyDeleted(lastName);
+            studentService.deleteStudent(lastNameProcessed);
+            throw new StudentSuccessfullyDeleted(lastNameProcessed);
         }
     }
 

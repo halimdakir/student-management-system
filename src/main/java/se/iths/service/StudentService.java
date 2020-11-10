@@ -1,12 +1,11 @@
 package se.iths.service;
 
-import se.iths.annotation.FirstLetterToUppercase;
-import se.iths.annotation.LastNameProcessor;
 import se.iths.entity.Student;
-import java.util.List;
-import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 public class StudentService {
