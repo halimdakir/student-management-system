@@ -48,15 +48,19 @@ public class StudentRest {
     @Path("create")
     @POST
     public Response createStudent(Student student){
-        studentService.createStudent(student);
-        return Response.ok(student).build();
+        String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
+        var studentProcessed = new Student(student.getFirstName(), lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+        studentService.createStudent(studentProcessed);
+        return Response.ok(studentProcessed).build();
     }
 
     @Path("update")
     @PUT
     public Response updateStudent(Student student){
-        studentService.updateStudent(student);
-        return Response.ok(student).build();
+        String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
+        var studentProcessed = new Student(student.getFirstName(), lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+        studentService.updateStudent(studentProcessed);
+        return Response.ok(studentProcessed).build();
     }
 
     @Path("{lastName}")
