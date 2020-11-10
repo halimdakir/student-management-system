@@ -1,8 +1,8 @@
 package se.iths.rest;
 
 
-import se.iths.annotation.FirstLetterToUppercase;
-import se.iths.annotation.LastNameProcessor;
+import se.iths.annotation.CorrectNameFormat;
+import se.iths.annotation.NameProcessor;
 import se.iths.entity.Student;
 import se.iths.exception.StudentNotFound;
 import se.iths.exception.StudentSuccessfullyDeleted;
@@ -20,11 +20,11 @@ public class StudentRest {
 
     @Inject
     StudentService studentService;
-    LastNameProcessor lastNameProcessor;
+    NameProcessor nameProcessor;
 
     @Inject
-    public StudentRest(@FirstLetterToUppercase LastNameProcessor lastNameProcessor) {
-        this.lastNameProcessor = lastNameProcessor;
+    public StudentRest(@CorrectNameFormat NameProcessor nameProcessor) {
+        this.nameProcessor = nameProcessor;
     }
 
     @Path("all")
@@ -36,7 +36,7 @@ public class StudentRest {
     @Path("{lastName}")
     @GET
     public Response getOneStudent(@PathParam("lastName") String lastName){
-        String lastNameProcessed = lastNameProcessor.processLastName(lastName);
+        String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student==null){
             throw new StudentNotFound(lastNameProcessed);
@@ -48,8 +48,8 @@ public class StudentRest {
     @Path("create")
     @POST
     public Response createStudent(Student student){
-        String firstNameProcessed = lastNameProcessor.processLastName(student.getFirstName());
-        String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
+        String firstNameProcessed = nameProcessor.processName(student.getFirstName());
+        String lastNameProcessed = nameProcessor.processName(student.getLastName());
         var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
         studentService.createStudent(studentProcessed);
         return Response.ok(studentProcessed).build();
@@ -58,8 +58,8 @@ public class StudentRest {
     @Path("update")
     @PUT
     public Response updateStudent(Student student){
-        String firstNameProcessed = lastNameProcessor.processLastName(student.getFirstName());
-        String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
+        String firstNameProcessed = nameProcessor.processName(student.getFirstName());
+        String lastNameProcessed = nameProcessor.processName(student.getLastName());
         var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
         studentService.updateStudent(studentProcessed);
         return Response.ok(studentProcessed).build();
@@ -68,7 +68,7 @@ public class StudentRest {
     @Path("{lastName}")
     @DELETE
     public Response deleteStudent(@PathParam("lastName") String lastName){
-        String lastNameProcessed = lastNameProcessor.processLastName(lastName);
+        String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student == null){
             throw new StudentNotFound(lastNameProcessed);

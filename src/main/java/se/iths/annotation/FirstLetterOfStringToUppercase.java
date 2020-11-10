@@ -1,10 +1,10 @@
 package se.iths.annotation;
 
 
-@FirstLetterToUppercase
-public class MakeFirstLetterInLastNameToUppercase implements LastNameProcessor{
+@CorrectNameFormat
+public class FirstLetterOfStringToUppercase implements NameProcessor {
 
-    public String processLastName(String text) {
+    public String processName(String text) {
         StringBuilder str = new StringBuilder();
         char[] chars = new char[text.length()];
 
