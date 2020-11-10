@@ -26,6 +26,7 @@ public class StudentService {
             return  entityManager.createQuery(
                     "SELECT s FROM Student s WHERE s.lastName LIKE :lastName", Student.class)
                     .setParameter("lastName", lastName)
+                    .setMaxResults(1)
                     .getSingleResult();
         } catch(NoResultException e) {
         return null;

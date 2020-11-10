@@ -7,6 +7,7 @@
                 "email": "halim.dakir@iths.se",
                 "phoneNumber": "0722 000 111"
             }
+            
 ###### `` ¤ POST Create new a student: http://localhost:8080/se.iths/api/v1/student/create``
 ![Post](https://user-images.githubusercontent.com/3110131/98452523-42fe6280-2150-11eb-9de8-7465554b865f.jpg)
 ###### `` ¤ GET all students: http://localhost:8080/se.iths/api/v1/student/all``

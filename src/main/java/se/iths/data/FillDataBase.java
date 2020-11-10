@@ -18,7 +18,7 @@ public class FillDataBase {
 
     private List<Student> students(){
         var student1 = new Student("Halim", "Dakir", "halim.dakir@iths.se", "0700-234 675");
-        var student2 = new Student("Elena", "Elena", "elena.elena@iths.se", "0711 222 333");
+        var student2 = new Student("Norah", "Andersson", "norah.andersson@iths.se", "0711 222 333");
         List<Student> list = Collections.synchronizedList(new ArrayList<>());
         list.add(student1);
         list.add(student2);
