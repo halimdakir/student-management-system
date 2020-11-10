@@ -48,8 +48,9 @@ public class StudentRest {
     @Path("create")
     @POST
     public Response createStudent(Student student){
+        String firstNameProcessed = lastNameProcessor.processLastName(student.getFirstName());
         String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
-        var studentProcessed = new Student(student.getFirstName(), lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+        var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
         studentService.createStudent(studentProcessed);
         return Response.ok(studentProcessed).build();
     }
@@ -57,8 +58,9 @@ public class StudentRest {
     @Path("update")
     @PUT
     public Response updateStudent(Student student){
+        String firstNameProcessed = lastNameProcessor.processLastName(student.getFirstName());
         String lastNameProcessed = lastNameProcessor.processLastName(student.getLastName());
-        var studentProcessed = new Student(student.getFirstName(), lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+        var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
         studentService.updateStudent(studentProcessed);
         return Response.ok(studentProcessed).build();
     }
