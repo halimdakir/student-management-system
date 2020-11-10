@@ -9,7 +9,7 @@
                 "phoneNumber": "0722 000 111"
             }
           
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `F.Y.I No matter how you write First & Last name (Lower upper case) when you` **POST** `or` **PUT** `or` **GET** `one, there a customised annotation that makes first letter upper and the rest lower case, it will look like this: Halim`
+![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `F.Y.I No matter how you write First & Last name (Lower upper case) when you` **POST** `or` **PUT** `or` **GET** `one, there is a customised annotation that makes first letter upper and the rest lower case, the first & last name will look like this:` **Halim**
 
 
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+)` POST Create new a student: http://localhost:8080/se.iths/api/v1/student/create`
