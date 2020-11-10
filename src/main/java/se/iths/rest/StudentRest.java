@@ -1,6 +1,8 @@
 package se.iths.rest;
 
 
+import se.iths.annotation.FirstLetterToUppercase;
+import se.iths.annotation.LastNameProcessor;
 import se.iths.entity.Student;
 import se.iths.exception.StudentNotFound;
 import se.iths.exception.StudentSuccessfullyDeleted;
@@ -18,7 +20,12 @@ public class StudentRest {
 
     @Inject
     StudentService studentService;
+    LastNameProcessor lastNameProcessor;
 
+    @Inject
+    public StudentRest(@FirstLetterToUppercase LastNameProcessor lastNameProcessor) {
+        this.lastNameProcessor = lastNameProcessor;
+    }
 
     @Path("all")
     @GET
@@ -29,9 +36,10 @@ public class StudentRest {
     @Path("{lastName}")
     @GET
     public Response getOneStudent(@PathParam("lastName") String lastName){
-        var student = studentService.findStudentByLastName(lastName);
+        String lastNameProcessed = lastNameProcessor.processLastName(lastName);
+        var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student==null){
-            throw new StudentNotFound(lastName);
+            throw new StudentNotFound(lastNameProcessed);
         }else {
             return Response.ok(student).build();
         }

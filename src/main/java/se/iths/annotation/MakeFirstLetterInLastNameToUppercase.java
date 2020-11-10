@@ -1,5 +1,7 @@
 package se.iths.annotation;
 
+
+@FirstLetterToUppercase
 public class MakeFirstLetterInLastNameToUppercase implements LastNameProcessor{
 
     public String processLastName(String text) {

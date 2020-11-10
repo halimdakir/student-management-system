@@ -1,7 +1,10 @@
 package se.iths.service;
 
+import se.iths.annotation.FirstLetterToUppercase;
+import se.iths.annotation.LastNameProcessor;
 import se.iths.entity.Student;
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 
@@ -10,6 +13,7 @@ public class StudentService {
 
     @PersistenceContext
     EntityManager entityManager;
+
 
     public Student createStudent(Student student) {
         entityManager.persist(student);
