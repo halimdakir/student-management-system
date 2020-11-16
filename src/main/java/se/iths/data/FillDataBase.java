@@ -2,18 +2,31 @@ package se.iths.data;
 
 import se.iths.entity.Student;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 
+@Singleton
+@Startup
 public class FillDataBase {
+
+    @PersistenceContext
+    EntityManager entityManager;
+
     List<Student> studentList = new ArrayList<>();
 
-    @Produces
-    List<Student> getStudentList(){
+    @PostConstruct
+    public void fillDataBase(){
         studentList = students();
-        return studentList;
+        for (Student student: studentList) {
+            entityManager.persist(student);
+        }
     }
 
     private List<Student> students(){
