@@ -4,7 +4,9 @@ package se.iths.rest;
 import se.iths.annotation.CorrectNameFormat;
 import se.iths.annotation.NameProcessor;
 import se.iths.entity.Student;
-import se.iths.exception.StudentNotFound;
+import se.iths.exception.IdNotFoundException;
+import se.iths.exception.RequiredFieldsException;
+import se.iths.exception.StudentNotFoundException;
 import se.iths.exception.StudentSuccessfullyDeleted;
 import se.iths.service.StudentService;
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class StudentRest {
         String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student==null){
-            throw new StudentNotFound(lastNameProcessed);
+            throw new StudentNotFoundException(lastNameProcessed);
         }else {
             return Response.ok(student).build();
         }
@@ -48,21 +50,37 @@ public class StudentRest {
     @Path("create")
     @POST
     public Response createStudent(Student student){
-        String firstNameProcessed = nameProcessor.processName(student.getFirstName());
-        String lastNameProcessed = nameProcessor.processName(student.getLastName());
-        var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
-        studentService.createStudent(studentProcessed);
-        return Response.ok(studentProcessed).build();
+        if (student.getFirstName() != null && student.getLastName() != null && student.getEmail() != null){
+            String firstNameProcessed = nameProcessor.processName(student.getFirstName());
+            String lastNameProcessed = nameProcessor.processName(student.getLastName());
+
+            var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+            studentService.createStudent(studentProcessed);
+            return Response.ok(studentProcessed).build();
+        }else {
+            throw new RequiredFieldsException();
+        }
+
     }
 
     @Path("update")
     @PUT
     public Response updateStudent(Student student){
-        String firstNameProcessed = nameProcessor.processName(student.getFirstName());
-        String lastNameProcessed = nameProcessor.processName(student.getLastName());
-        var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
-        studentService.updateStudent(studentProcessed);
-        return Response.ok(studentProcessed).build();
+        if (student.getId() != null) {
+            if (studentService.findStudentById(student.getId()) != null) {
+                String firstNameProcessed = nameProcessor.processName(student.getFirstName());
+                String lastNameProcessed = nameProcessor.processName(student.getLastName());
+                var studentProcessed = new Student(firstNameProcessed, lastNameProcessed, student.getEmail(), student.getPhoneNumber());
+                studentService.updateStudent(studentProcessed);
+                return Response.ok(studentProcessed).build();
+            }else {
+                throw new IdNotFoundException( "There is no student with this ID :"+student.getId());
+            }
+        }
+        else {
+            throw new IdNotFoundException( "The Id is required to make update");
+        }
+
     }
 
     @Path("{lastName}")
@@ -71,7 +89,7 @@ public class StudentRest {
         String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student == null){
-            throw new StudentNotFound(lastNameProcessed);
+            throw new StudentNotFoundException(lastNameProcessed);
         }else {
             studentService.deleteStudent(lastNameProcessed);
             throw new StudentSuccessfullyDeleted(lastNameProcessed);
