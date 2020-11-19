@@ -47,6 +47,17 @@ public class StudentRest {
         }
     }
 
+    /*@Path("{id}")
+    @GET
+    public Response getOneStudent(@PathParam("id") Long id){
+        var student = studentService.findStudentById(id);
+        if (student!=null){
+            return Response.ok(student).build();
+        }else {
+            throw new StudentNotFoundException(""+id);
+        }
+    }*/
+
     @Path("create")
     @POST
     public Response createStudent(Student student){
