@@ -1,6 +1,7 @@
 package se.iths.data;
 
 import se.iths.entity.Student;
+import se.iths.entity.Subject;
 import se.iths.entity.Teacher;
 
 import javax.annotation.PostConstruct;
@@ -29,9 +30,21 @@ public class FillDataBase {
         Student student1 = new Student("Halim", "Dakir", "halim.dakir@iths.se", "0700-234 675");
         Student student2 = new Student("Norah", "Andersson", "norah.andersson@iths.se", "0711 222 333");
 
-        teacher1.addStudent(student1);
-        teacher1.addStudent(student2);
-        teacher2.addStudent(student2);
+        Subject subject1 = new Subject("Math");
+        Subject subject2 = new Subject("Java");
+        Subject subject3 = new Subject("DotNet");
+
+        student1.addSubject(subject1);
+        student1.addSubject(subject2);
+        student2.addSubject(subject1);
+        student2.addSubject(subject3);
+
+        teacher1.addSubject(subject1);
+        teacher2.addSubject(subject2);
+        teacher2.addSubject(subject3);
+
+        entityManager.persist(student1);
+        entityManager.persist(student2);
 
         entityManager.persist(teacher1);
         entityManager.persist(teacher2);

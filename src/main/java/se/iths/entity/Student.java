@@ -22,17 +22,13 @@ public class Student {
     @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "0700 000000")
     private String phoneNumber;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Subject> subjects = new HashSet<>();
 
-    @ManyToMany(mappedBy = "students", cascade = CascadeType.PERSIST)
-    @JoinTable(name = "students_teachers",
-            joinColumns = {
-                    @JoinColumn(name = "student_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "teacher_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
-    private Set<Teacher> teachers = new HashSet<>();
-
+    public void addSubject(Subject subject) {
+        this.subjects.add(subject);
+        subject.getStudents().add(this);
+    }
 
     public Student() {
     }
@@ -44,9 +40,7 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<Teacher> getTeachers() {
-        return teachers;
-    }
+
 
     public Long getId() {
         return id;

@@ -3,6 +3,8 @@ package se.iths.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Subject {
@@ -15,6 +17,20 @@ public class Subject {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Teacher teacher;
+
+    @ManyToMany(mappedBy = "subjects", cascade = CascadeType.PERSIST)
+    @JoinTable(name = "subjects_students",
+            joinColumns = {
+                    @JoinColumn(name = "subject_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "student_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private Set<Student> students = new HashSet<>();
+
+    public Set<Student> getStudents() {
+        return students;
+    }
 
     public Subject() {
     }

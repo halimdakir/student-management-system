@@ -24,8 +24,6 @@ public class Teacher {
     @Pattern(regexp = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$", message = "0700 000000")
     private String phoneNumber;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
     private Set<Subject> subjects = new HashSet<>();
@@ -86,8 +84,4 @@ public class Teacher {
         this.phoneNumber = phoneNumber;
     }
 
-    public void addStudent(Student student) {
-        this.students.add(student);
-        student.getTeachers().add(this);
-    }
 }
