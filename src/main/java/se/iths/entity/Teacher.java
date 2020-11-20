@@ -27,6 +27,10 @@ public class Teacher {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Student> students = new HashSet<>();
 
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
+    private Set<Subject> subjects = new HashSet<>();
+
+
     public Teacher() {
     }
 
@@ -38,7 +42,10 @@ public class Teacher {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
-
+    public void addSubject(Subject subject){
+        this.subjects.add(subject);
+        subject.setTeacher(this);
+    }
     public Long getId() {
         return id;
     }
