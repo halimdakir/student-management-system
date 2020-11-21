@@ -35,9 +35,9 @@ public class StudentRest {
         return studentService.getAllStudents();
     }
 
-    @Path("{lastName}")
+    @Path("lastname/{lastName}")
     @GET
-    public Response getOneStudent(@PathParam("lastName") String lastName){
+    public Response getOneStudentByLastName(@PathParam("lastName") String lastName){
         String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student==null){
@@ -49,7 +49,7 @@ public class StudentRest {
 
     @Path("{id}")
     @GET
-    public Response getOneStudent(@PathParam("id") Long id){
+    public Response getOneStudentById(@PathParam("id") Long id){
         var student = studentService.findStudentById(id);
         if (student!=null){
             return Response.ok(student).build();

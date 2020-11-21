@@ -50,5 +50,4 @@ public class TeacherService {
         entityManager.remove(entityManager.find(Teacher.class, id));
     }
 
-
 }

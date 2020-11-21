@@ -3,11 +3,10 @@ package se.iths.rest;
 import se.iths.annotation.CorrectNameFormat;
 import se.iths.annotation.NameProcessor;
 import se.iths.entity.Teacher;
-import se.iths.exception.IdNotFoundException;
 import se.iths.exception.ElementNotFoundException;
 import se.iths.exception.ElementSuccessfullyDeleted;
+import se.iths.exception.IdNotFoundException;
 import se.iths.service.TeacherService;
-
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -42,13 +41,12 @@ public class TeacherRest {
         return Response.ok(teacher).build();
     }
 
-    @Path("{lastName}")
+    @Path("lastname/{lastName}")
     @GET
     public Response getOneTeacherByLastName(@PathParam("lastName") String lastName){
-        String lastNameProcessed = nameProcessor.processName(lastName);
-        var teacher = teacherService.findTeacherByLastName(lastNameProcessed);
-        if (teacher==null){
-            throw new ElementNotFoundException(lastNameProcessed);
+        var teacher = teacherService.findTeacherByLastName(nameProcessor.processName(lastName));
+        if (teacher == null){
+            throw new ElementNotFoundException(lastName);
         }else {
             return Response.ok(teacher).build();
         }
