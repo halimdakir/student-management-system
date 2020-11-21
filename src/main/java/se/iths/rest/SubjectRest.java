@@ -33,7 +33,7 @@ public class SubjectRest {
     @Path("countsubject_byteacher/{firstName}")
     @GET
     public Response countSubjectByTeacher(@PathParam("firstName") String teacherFirstName){
-        var result =  new ResultToJson(subjectService.countSubjectByTeacher(teacherFirstName));
+        var result =  new ResultToJson(subjectService.countSubjectByTeacher(nameProcessor.processName(teacherFirstName)));
         return Response.ok(result).build();
     }
 

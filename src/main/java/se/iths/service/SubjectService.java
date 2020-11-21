@@ -21,7 +21,7 @@ public class SubjectService {
     public Number countSubjectByTeacher(String teacherFirstName) {
         try{
             return ((Number)entityManager
-                    .createQuery("SELECT DISTINCT COUNT (sb.id) AS AmoutSubject FROM Subject sb INNER JOIN FETCH sb.teacher t WHERE t.firstName = :teacherFirstName GROUP BY t.id")
+                    .createQuery("SELECT DISTINCT COUNT (sb.id) FROM Subject sb INNER JOIN FETCH sb.teacher t WHERE t.firstName = :teacherFirstName GROUP BY t.id")
                     .setParameter("teacherFirstName",teacherFirstName)
                     .getSingleResult()).intValue();
         } catch(NoResultException e) {
