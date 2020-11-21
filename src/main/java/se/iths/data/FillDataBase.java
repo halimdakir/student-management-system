@@ -3,14 +3,11 @@ package se.iths.data;
 import se.iths.entity.Student;
 import se.iths.entity.Subject;
 import se.iths.entity.Teacher;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.List;
 
 @Singleton
 @Startup
@@ -23,21 +20,27 @@ public class FillDataBase {
 
     @PostConstruct
     public void fillDataBase(){
-        Teacher teacher1 = new Teacher("Pontus", "Salvador", "pontus.salvador@gmail.fr", "0700-234 675");
-        Teacher teacher2 = new Teacher("Natcha", "Tchika", "natcha.tchika@gmail.fr", "0700-234 675");
+        var teacher1 = new Teacher("Pontus", "Salvador", "pontus.salvador@gmail.fr", "0700-234 675");
+        var teacher2 = new Teacher("Natcha", "Tchika", "natcha.tchika@gmail.fr", "0700-234 675");
 
+        var student1 = new Student("Halim", "Dakir", "halim.dakir@iths.se", "0700-234 675");
+        var student2 = new Student("Norah", "Andersson", "norah.andersson@iths.se", "0711 222 333");
+        var student3 = new Student("Lara", "Saddik", "lara@email.com", "0777 222 777");
+        var student4 = new Student("Sarah", "Dakir", "saraha.dakir@email.com","0733 111 000");
 
-        Student student1 = new Student("Halim", "Dakir", "halim.dakir@iths.se", "0700-234 675");
-        Student student2 = new Student("Norah", "Andersson", "norah.andersson@iths.se", "0711 222 333");
-
-        Subject subject1 = new Subject("Math");
-        Subject subject2 = new Subject("Java");
-        Subject subject3 = new Subject("DotNet");
+        var subject1 = new Subject("Math");
+        var subject2 = new Subject("Java");
+        var subject3 = new Subject("DotNet");
 
         student1.addSubject(subject1);
         student1.addSubject(subject2);
         student2.addSubject(subject1);
         student2.addSubject(subject3);
+        student3.addSubject(subject1);
+        student3.addSubject(subject2);
+        student3.addSubject(subject3);
+        student4.addSubject(subject2);
+        student4.addSubject(subject3);
 
         teacher1.addSubject(subject1);
         teacher2.addSubject(subject2);
@@ -45,6 +48,8 @@ public class FillDataBase {
 
         entityManager.persist(student1);
         entityManager.persist(student2);
+        entityManager.persist(student3);
+        entityManager.persist(student4);
 
         entityManager.persist(teacher1);
         entityManager.persist(teacher2);
