@@ -2,13 +2,10 @@ package se.iths.rest;
 
 import se.iths.annotation.CorrectNameFormat;
 import se.iths.annotation.NameProcessor;
-import se.iths.entity.Student;
-import se.iths.entity.Subject;
 import se.iths.entity.Teacher;
 import se.iths.exception.IdNotFoundException;
-import se.iths.exception.RequiredFieldsException;
-import se.iths.exception.StudentNotFoundException;
-import se.iths.service.SubjectService;
+import se.iths.exception.ElementNotFoundException;
+import se.iths.exception.ElementSuccessfullyDeleted;
 import se.iths.service.TeacherService;
 
 import javax.inject.Inject;
@@ -38,6 +35,25 @@ public class TeacherRest {
         return teacherService.getAllTeachers();
     }
 
+    @Path("{id}")
+    @GET
+    public Response getOneTeacherById(@PathParam("id") Long id){
+        var teacher = teacherService.findTeacherById(id);
+        return Response.ok(teacher).build();
+    }
+
+    @Path("{lastName}")
+    @GET
+    public Response getOneTeacherByLastName(@PathParam("lastName") String lastName){
+        String lastNameProcessed = nameProcessor.processName(lastName);
+        var teacher = teacherService.findTeacherByLastName(lastNameProcessed);
+        if (teacher==null){
+            throw new ElementNotFoundException(lastNameProcessed);
+        }else {
+            return Response.ok(teacher).build();
+        }
+    }
+
     @Path("create")
     @POST
     public Response createTeacher(Teacher teacher){
@@ -62,6 +78,17 @@ public class TeacherRest {
         else {
             throw new IdNotFoundException( "The Id is required to make update");
         }
+    }
 
+    @Path("{id}")
+    @DELETE
+    public Response deleteTeacher(@PathParam("id") Long id){
+        var student = teacherService.findTeacherById(id);
+        if (student == null){
+            throw new ElementNotFoundException(""+id);
+        }else {
+            teacherService.deleteTeacher(id);
+            throw new ElementSuccessfullyDeleted(""+id);
+        }
     }
 }

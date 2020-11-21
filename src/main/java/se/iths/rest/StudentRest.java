@@ -6,8 +6,8 @@ import se.iths.annotation.NameProcessor;
 import se.iths.entity.Student;
 import se.iths.exception.IdNotFoundException;
 import se.iths.exception.RequiredFieldsException;
-import se.iths.exception.StudentNotFoundException;
-import se.iths.exception.StudentSuccessfullyDeleted;
+import se.iths.exception.ElementNotFoundException;
+import se.iths.exception.ElementSuccessfullyDeleted;
 import se.iths.service.StudentService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -41,22 +41,22 @@ public class StudentRest {
         String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student==null){
-            throw new StudentNotFoundException(lastNameProcessed);
+            throw new ElementNotFoundException(lastNameProcessed);
         }else {
             return Response.ok(student).build();
         }
     }
 
-    /*@Path("{id}")
+    @Path("{id}")
     @GET
     public Response getOneStudent(@PathParam("id") Long id){
         var student = studentService.findStudentById(id);
         if (student!=null){
             return Response.ok(student).build();
         }else {
-            throw new StudentNotFoundException(""+id);
+            throw new ElementNotFoundException(""+id);
         }
-    }*/
+    }
 
     @Path("create")
     @POST
@@ -100,10 +100,10 @@ public class StudentRest {
         String lastNameProcessed = nameProcessor.processName(lastName);
         var student = studentService.findStudentByLastName(lastNameProcessed);
         if (student == null){
-            throw new StudentNotFoundException(lastNameProcessed);
+            throw new ElementNotFoundException(lastNameProcessed);
         }else {
             studentService.deleteStudent(lastNameProcessed);
-            throw new StudentSuccessfullyDeleted(lastNameProcessed);
+            throw new ElementSuccessfullyDeleted(lastNameProcessed);
         }
     }
 
