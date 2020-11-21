@@ -73,9 +73,9 @@
 
 ` Json-body looks like that, keep in mind that this field are mandatory.`
             
-           {
+           `{
                 "subjectName": "Java",
-            }
+            }`
 
 
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **GET** ` count amount of subject by teacher firt name: /se.iths/api/v1/subject/countsubject_byteacher/{firstName}`
@@ -93,7 +93,8 @@
 ![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **GET** ` subject by name: /se.iths/api/v1/subject/name/{name}`
 
 
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **PUT** ` update a teacher: /se.iths/api/v1/subject/update`
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **PUT** ` update a subject: /se.iths/api/v1/subject/update`
 
 
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **DELETE** ` a teacher: /se.iths/api/v1/subject/{id}`
+![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) **DELETE** ` a subject by id: /se.iths/api/v1/subject/{id}`
+
