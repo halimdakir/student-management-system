@@ -2,6 +2,7 @@ package se.iths.rest;
 
 import se.iths.annotation.CorrectNameFormat;
 import se.iths.annotation.NameProcessor;
+import se.iths.entity.Student;
 import se.iths.entity.Teacher;
 import se.iths.exception.ElementNotFoundException;
 import se.iths.exception.ElementSuccessfullyDeleted;
@@ -12,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Set;
 
 @Path("teacher")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -26,6 +28,12 @@ public class TeacherRest {
     @Inject
     public TeacherRest(@CorrectNameFormat NameProcessor nameProcessor) {
         this.nameProcessor = nameProcessor;
+    }
+
+    @Path("teacherbysubject/{subjectName}")
+    @GET
+    public Teacher getTeacherBySubject(@PathParam("subjectName") String subjectName){
+        return teacherService.getTeacherBySubject(nameProcessor.processName(subjectName));
     }
 
     @Path("all")

@@ -1,11 +1,15 @@
 package se.iths.service;
 
+import se.iths.entity.Subject;
 import se.iths.entity.Teacher;
+import se.iths.exception.ElementNotFoundException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 public class TeacherService {
@@ -13,6 +17,18 @@ public class TeacherService {
     @PersistenceContext
     EntityManager entityManager;
 
+
+    public Teacher getTeacherBySubject(String subjectName) {
+        try{
+            var subject = (Subject) entityManager
+                    .createQuery("SELECT DISTINCT sb FROM Subject sb INNER JOIN FETCH sb.teacher t WHERE sb.subjectName = :subjectName")
+                    .setParameter("subjectName", subjectName)
+                    .getSingleResult();
+            return subject.getTeacher();
+        } catch(NoResultException e) {
+            throw new ElementNotFoundException(subjectName);
+        }
+    }
 
     public Teacher createTeacher(Teacher teacher) {
         entityManager.persist(teacher);

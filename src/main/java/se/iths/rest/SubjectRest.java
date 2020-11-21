@@ -2,12 +2,11 @@ package se.iths.rest;
 
 import se.iths.annotation.CorrectNameFormat;
 import se.iths.annotation.NameProcessor;
-import se.iths.entity.Student;
 import se.iths.entity.Subject;
-import se.iths.entity.Teacher;
 import se.iths.exception.ElementNotFoundException;
 import se.iths.exception.ElementSuccessfullyDeleted;
 import se.iths.exception.IdNotFoundException;
+import se.iths.json.CounterToJson;
 import se.iths.service.SubjectService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -29,6 +28,13 @@ public class SubjectRest {
     @Inject
     public SubjectRest(@CorrectNameFormat NameProcessor nameProcessor) {
         this.nameProcessor = nameProcessor;
+    }
+
+    @Path("countsubject_byteacher/{firstName}")
+    @GET
+    public Response countSubjectByTeacher(@PathParam("firstName") String teacherFirstName){
+        var result =  new CounterToJson(subjectService.countSubjectByTeacher(teacherFirstName));
+        return Response.ok(result).build();
     }
 
     @Path("all")

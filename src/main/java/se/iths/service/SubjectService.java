@@ -1,8 +1,11 @@
 package se.iths.service;
 
 import se.iths.entity.Subject;
+import se.iths.entity.Teacher;
+import se.iths.exception.ElementNotFoundException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -14,6 +17,17 @@ public class SubjectService {
     @PersistenceContext
     EntityManager entityManager;
 
+
+    public Number countSubjectByTeacher(String teacherFirstName) {
+        try{
+            return ((Number)entityManager
+                    .createQuery("SELECT DISTINCT COUNT (sb.id) AS AmoutSubject FROM Subject sb INNER JOIN FETCH sb.teacher t WHERE t.firstName = :teacherFirstName GROUP BY t.id")
+                    .setParameter("teacherFirstName",teacherFirstName)
+                    .getSingleResult()).intValue();
+        } catch(NoResultException e) {
+            throw new ElementNotFoundException(""+teacherFirstName);
+        }
+    }
 
     public Subject createSubject(Subject subject) {
         entityManager.persist(subject);

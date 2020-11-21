@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Set;
 
 @Path("student")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -27,6 +28,18 @@ public class StudentRest {
     @Inject
     public StudentRest(@CorrectNameFormat NameProcessor nameProcessor) {
         this.nameProcessor = nameProcessor;
+    }
+
+    @Path("studentbysubject/{subjectName}")
+    @GET
+    public Set<Student> getStudentBySubject(@PathParam("subjectName") String subjectName){
+        return studentService.getStudentBySubject(nameProcessor.processName(subjectName));
+    }
+
+    @Path("studentbyteacher-subject/{teacherName}/{subjectName}")
+    @GET
+    public Set<Student> getSpecificStudent(@PathParam("teacherName") String teacherName, @PathParam("subjectName") String subjectName){
+        return studentService.getStudentByTeacherAndSubject(nameProcessor.processName(teacherName), nameProcessor.processName(subjectName));
     }
 
     @Path("all")

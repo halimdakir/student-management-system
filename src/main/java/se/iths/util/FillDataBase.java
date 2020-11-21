@@ -1,4 +1,4 @@
-package se.iths.data;
+package se.iths.util;
 
 import se.iths.entity.Student;
 import se.iths.entity.Subject;
@@ -30,7 +30,7 @@ public class FillDataBase {
 
         var subject1 = new Subject("Math");
         var subject2 = new Subject("Java");
-        var subject3 = new Subject("DotNet");
+        var subject3 = new Subject("Sql");
 
         student1.addSubject(subject1);
         student1.addSubject(subject2);

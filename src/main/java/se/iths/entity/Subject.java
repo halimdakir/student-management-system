@@ -32,6 +32,10 @@ public class Subject {
         return students;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
     public Subject() {
     }
     public Subject(@NotEmpty String subjectName) {
