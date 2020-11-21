@@ -6,7 +6,7 @@ import se.iths.entity.Subject;
 import se.iths.exception.ElementNotFoundException;
 import se.iths.exception.ElementSuccessfullyDeleted;
 import se.iths.exception.IdNotFoundException;
-import se.iths.json.CounterToJson;
+import se.iths.json.ResultToJson;
 import se.iths.service.SubjectService;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -33,7 +33,7 @@ public class SubjectRest {
     @Path("countsubject_byteacher/{firstName}")
     @GET
     public Response countSubjectByTeacher(@PathParam("firstName") String teacherFirstName){
-        var result =  new CounterToJson(subjectService.countSubjectByTeacher(teacherFirstName));
+        var result =  new ResultToJson(subjectService.countSubjectByTeacher(teacherFirstName));
         return Response.ok(result).build();
     }
 

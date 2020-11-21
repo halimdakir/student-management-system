@@ -1,9 +1,9 @@
 package se.iths.json;
 
-public class CounterToJson {
+public class ResultToJson {
     private Number subjectAmount;
 
-    public CounterToJson(Number subjectAmount) {
+    public ResultToJson(Number subjectAmount) {
         this.subjectAmount = subjectAmount;
     }
 
